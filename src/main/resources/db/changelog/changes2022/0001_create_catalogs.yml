@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: "2022-0001"
+      author: Valeriy Emelyanov
+      changes:
+        - createTable:
+            tableName: guild
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: guild_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: level
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: level_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: guild_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_level_guild
+                    references: guild(id)
+                    nullable: false
+              - column:
+                  name: min_rating
+                  type: int
+

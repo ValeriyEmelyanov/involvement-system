@@ -1,0 +1,95 @@
+databaseChangeLog:
+  - changeSet:
+      id: "2022-0003"
+      author: Valeriy Emelyanov
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: full_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: login
+                  type: varchar(50)
+              - column:
+                  name: password
+                  type: varchar(150)
+              - column:
+                  name: phone
+                  type: varchar(50)
+              - column:
+                  name: email
+                  type: varchar(50)
+              - column:
+                  name: private_key
+                  type: varchar(250)
+              - column:
+                  name: public_key
+                  type: varchar(250)
+              - column:
+                  name: department_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_users_department
+                    references: department(id)
+                    nullable: true
+              - column:
+                  name: position_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_users_position
+                    references: position(id)
+                    nullable: true
+              - column:
+                  name: guild_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_users_guild
+                    references: guild(id)
+                    nullable: true
+              - column:
+                  name: level_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_users_level
+                    references: level(id)
+                    nullable: true
+        - createTable:
+            tableName: rating
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_rating_users
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: sum
+                  type: int
+        - addForeignKeyConstraint:
+            baseTableName: department
+            baseColumnNames: head_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_department_users
+
+
+

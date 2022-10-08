@@ -1,0 +1,4 @@
+id,full_name,login,password,phone,email,department_id,position_id,guild_id,level_id
+1,Иванов Иван Иванович,ivanov_ii,,8(999)0010001,ivanov_ii@our-company.mock,1,1,1,1
+2,Петров Иван Михайлович,petrov_im,,8(999)0010002,petrov_im@our-company.mock,2,2,1,2
+3,Викторов Леонид Николаевич,victorov_ln,,8(999)0010003,victorov_ln@our-company.mock,3,2,1,3

@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: "2022-0002"
+      author: Valeriy Emelyanov
+      changes:
+        - createTable:
+            tableName: department
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: department_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parent_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_department_department
+                    references: department(id)
+                    nullable: true
+              - column:
+                  name: head_id
+                  type: bigint
+        - createTable:
+            tableName: position
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: position_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
