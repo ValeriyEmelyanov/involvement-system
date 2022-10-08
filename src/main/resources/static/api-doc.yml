@@ -19,6 +19,8 @@ tags:
     description: Рейтинги участников
   - name: task
     description: Задания / активности
+  - name: wallet
+    description: Кошелек
 
 paths:
   /api/v1/members:
@@ -385,6 +387,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TaskResponse'
+  /api/v1/wallets/new:
+    post:
+      summary: Создать новый кошелек (пользователь создает в личном кабинете кошелек, публичный и приватные ключи)
+      operationId: createWallet
+      tags:
+        - wallet
+      responses:
+        '201':
+          description: CREATED
 
 
 components:
@@ -479,6 +490,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GuildInfoResponse'
+        roles:
+          type: array
+          items:
+            type: string
 
     GuildInfoResponse:
       type: object

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: "2022-9001"
+      id: "2022-0010"
       author: Valeriy Emelyanov
       changes:
         - loadData:

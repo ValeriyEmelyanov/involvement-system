@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: "2022-0004"
+      author: Valeriy Emelyanov
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_user_roles_users
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(20)
+                  constraints:
+                    nullable: false

@@ -6,4 +6,10 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes2022/0003_create_tables_rating_users.yml
   - include:
-      file: db/changelog/changes2022/9001_test_data.yml
+      file: db/changelog/changes2022/0004_create_table_user_roles.yml
+  - include:
+      file: db/changelog/changes2022/0010_test_data.yml
+  - include:
+      file: db/changelog/changes2022/0011_test_data_roles.yml
+  - include:
+      file: db/changelog/changes2022/0012_admin.yml
