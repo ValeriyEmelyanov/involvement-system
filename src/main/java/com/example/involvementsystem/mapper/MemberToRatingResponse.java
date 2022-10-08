@@ -12,7 +12,7 @@ public class MemberToRatingResponse implements Converter<User, MemberRatingRespo
         return MemberRatingResponse.builder()
                 .id(source.getId())
                 .fullName(source.getFullName())
-                .rating(source.getRating().getSum())
+                .rating(source.getRating() == null ? 0 : source.getRating().getSum())
                 .build();
     }
 }
