@@ -1,9 +1,12 @@
 package com.example.involvementsystem.mapper;
 
+import com.example.involvementsystem.dto.GuildInfoResponse;
 import com.example.involvementsystem.dto.MemberResponse;
 import com.example.involvementsystem.model.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 @Component
 public class MemberToResponse implements Converter<User, MemberResponse> {
@@ -17,8 +20,9 @@ public class MemberToResponse implements Converter<User, MemberResponse> {
                 .email(source.getEmail())
                 .department(source.getDepartment().getName())
                 .position(source.getPosition().getName())
-                .guild(source.getGuild().getName())
-                .level(source.getLevel().getName())
+                .guildInfos(source.getGuildInfos().stream()
+                        .map(e -> new GuildInfoResponse(e.getGuild().getName(), e.getLevel().getName()))
+                        .collect(Collectors.toList()))
                 .publicKey(source.getPublicKey())
                 .build();
     }

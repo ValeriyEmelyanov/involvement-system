@@ -15,6 +15,10 @@ tags:
     description: Отделы, отражающие структуры компании
   - name: position
     description: Должность члена гильдии в компании
+  - name: rating
+    description: Рейтинги участников
+  - name: task
+    description: Задания / активности
 
 paths:
   /api/v1/members:
@@ -213,6 +217,175 @@ paths:
                 items:
                   $ref: '#/components/schemas/PositionResponse'
 
+  /api/v1/ratings:
+    get:
+      summary: Получить постраничный список операций с рейтингом от новых к старых
+      operationId: getRatings
+      tags:
+        - rating
+      parameters:
+        - in: query
+          name: page
+          description: Номер страницы (нумерация начинается с 1)
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          example: 1
+        - in: query
+          name: size
+          description: Размер страницы (сколько операций выведется)
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 20
+          example: 20
+        - in: query
+          name: fromDate
+          description: Фильтр "с даты" включительно (дата в виде строки в формате ГГГГ-ММ-ДД чч:мм:сс)
+          allowEmptyValue: true
+          schema:
+            type: string
+          example: 2022-10-01 00:00:00
+        - in: query
+          name: toDate
+          description: Фильтр "по дату" включительно (дата в виде строки в формате ГГГГ-ММ-ДД чч:мм:сс)
+          allowEmptyValue: true
+          schema:
+            type: string
+          example: 2022-10-01 23:59:59
+      responses:
+        '200':
+          description: Список операций с рейтингом
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RatingOperationResponse'
+
+  /api/v1/tasks:
+    get:
+      summary: Получить постраничный список заданий/активностей от новых к старых
+      operationId: getTasks
+      tags:
+        - task
+      parameters:
+        - in: query
+          name: page
+          description: Номер страницы (нумерация начинается с 1)
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          example: 1
+        - in: query
+          name: size
+          description: Размер страницы (сколько заданий выведется)
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 20
+          example: 20
+        - in: query
+          name: fromDate
+          description: Фильтр "с даты" создания включительно (дата в виде строки в формате ГГГГ-ММ-ДД чч:мм:сс)
+          allowEmptyValue: true
+          schema:
+            type: string
+          example: 2022-10-01 00:00:00
+        - in: query
+          name: toDate
+          description: Фильтр "по дату" создания включительно (дата в виде строки в формате ГГГГ-ММ-ДД чч:мм:сс)
+          allowEmptyValue: true
+          schema:
+            type: string
+          example: 2022-10-01 23:59:59
+        - in: query
+          name: status
+          description: Статус задания (одно из значений DRAFT, PLAN, PROCESSING, DONE, CANCELLED)
+          allowEmptyValue: true
+          schema:
+            type: string
+          example: PLAN
+      responses:
+        '200':
+          description: Список заданий
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskResponse'
+    post:
+      summary: Создать новое задание
+      operationId: createTask
+      tags:
+        - task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+  /api/v1/tasks/{id}:
+    put:
+      summary: Изменить существующее задание
+      operationId: updateTask
+      tags:
+        - task
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор задания
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+    patch:
+      summary: Изменить статус и/или исполнителя задание
+      operationId: changeTaskStatus
+      tags:
+        - task
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор задания
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskStatusRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResponse'
+
 
 components:
   schemas:
@@ -298,6 +471,19 @@ components:
           type: string
           description:  Наименование должности участника
           example: Ведущий Java-разработчик
+        publicKey:
+          type: string
+          description:  Публичный ключ кошелька участника
+          example: 0x15Cc4abzz27647ec9fE70D892E55586074263dF0
+        guildInfos:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuildInfoResponse'
+
+    GuildInfoResponse:
+      type: object
+      description: Информация о состоянии участника в гильдии
+      properties:
         guild:
           type: string
           description:  Наименование гильдии
@@ -306,10 +492,6 @@ components:
           type: string
           description:  Уровень участника по шкале градаций гильдии
           example: 3 уровень
-        publicKey:
-          type: string
-          description:  Публичный ключ кошелька участника
-          example: 0x15Cc4abzz27647ec9fE70D892E55586074263dF0
 
     GuildResponse:
       type: object
@@ -383,3 +565,132 @@ components:
           description: Название должности
           example: 3
 
+    RatingOperationResponse:
+      type: object
+      description: Операция с рейтингом
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор операции
+          example: 452
+        performed:
+          type: string
+          description: Дата выполнения задания, заполняется автоматически текущим временем при сохранении операции
+          example: 2022-10-05 23:10:08
+        operationType:
+          type: string
+          description: Тип операции (Одно из значений - Пополнение, Снятие, Сброс)
+          example: Пополнение
+        sum:
+          type: integer
+          description: Сумма операции (имеет смысл для типов операций Пополнение и Снятие)
+          example: Пополнение
+        user:
+          type: string
+          description: Полное имя пользователя, выполнившего операцию
+          example: Орлов Александр Викторович
+        task_id:
+          type: integer
+          format: int64
+          description: Идентификатор задания, за который начислены баллы рейтинга
+          example: 302
+
+    TaskResponse:
+      type: object
+      description: Задание/активность
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор задания
+          example: 45
+        created:
+          type: string
+          description: Дата создания задания, заполняется автоматически текущим временем при сохранении задания
+          example: 2022-10-05 23:10:08
+        name:
+          type: string
+          description: Краткое название задания
+          example: Разработать систему мотивации
+        status:
+          type: string
+          description: Статус задания (одно из значений - Черновик, План, Выполняется, Выполнено, Отменено)
+          example: Выполняется
+        description:
+          type: string
+          description: Подробное описание задания
+          example: Система мотивации, будет включать в себя следующие функции ...
+        maticAward:
+          type: string
+          description: Вознаграждение в Matic (число в строковом виде)
+          example: 0.4
+        rubleAward:
+          type: string
+          description: Вознаграждение в Ruble (число в строковом виде)
+          example: 0
+        ntfAward:
+          type: integer
+          description: Вознаграждение в NTF
+          example: 0
+        ratingAward:
+          type: integer
+          description: Вознаграждение в баллах рейтинга
+          example: 5
+        author:
+          type: string
+          description: Автор (если не заполнено, заполняется автоматически при сохранении задания)
+          example: Иванов Иван Иванович
+        executor:
+          type: string
+          description: Исполнитель
+          example: Орлов Александр Викторович
+    TaskRequest:
+      type: object
+      description: Запрос на создание задания/активности
+      properties:
+        name:
+          type: string
+          description: Краткое название задания
+          example: Разработать систему мотивации
+        description:
+          type: string
+          description: Подробное описание задания
+          example: Система мотивации, будет включать в себя следующие функции ...
+        maticAward:
+          type: string
+          description: Вознаграждение в Matic (число в строковом виде)
+          example: 0.4
+        rubleAward:
+          type: string
+          description: Вознаграждение в Ruble (число в строковом виде)
+          example: 0
+        ntfAward:
+          type: integer
+          description: Вознаграждение в NTF
+          example: 0
+        ratingAward:
+          type: integer
+          description: Вознаграждение в баллах рейтинга
+          example: 5
+        author:
+          type: string
+          description: Автор
+          example: Иванов Иван Иванович
+        executor:
+          type: string
+          description: Исполнитель
+          example: Орлов Александр Викторович
+    TaskStatusRequest:
+      type: object
+      description: Запрос на изменение статуса и/или исполнителя задания
+      properties:
+        status:
+          type: string
+          description: Статус задания (одно из значений DRAFT, PLAN, PROCESSING, DONE, CANCELLED, значение может быть не заполнено)
+          example: PLAN
+        executorId:
+          type: integer
+          format: int64
+          description: Идентификатор исполнителя (значение может быть не заполнено)
+          example: 45

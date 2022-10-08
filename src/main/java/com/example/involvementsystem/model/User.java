@@ -15,9 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -56,16 +58,11 @@ public class User {
     @JoinColumn(name = "position_id")
     private Position position;
 
-    @ManyToOne
-    @JoinColumn(name = "guild_id")
-    private Guild guild;
-
-    @ManyToOne
-    @JoinColumn(name = "level_id")
-    private Level level;
-
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Rating rating;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<GuildInfo> guildInfos;
 
     @Override
     public boolean equals(Object o) {

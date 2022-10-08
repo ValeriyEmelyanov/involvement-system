@@ -113,14 +113,6 @@ databaseChangeLog:
                   header: position_id
                   name: position_id
                   type: numeric
-              - column:
-                  header: guild_id
-                  name: guild_id
-                  type: numeric
-              - column:
-                  header: level_id
-                  name: level_id
-                  type: numeric
             commentLineStartsWith: '#'
             encoding: UTF-8
             separator: ','
@@ -145,3 +137,26 @@ databaseChangeLog:
             separator: ','
             file: db/changelog/testdata/ratings.csv
             tableName: rating
+        - loadData:
+            columns:
+              - column:
+                  header: id
+                  name: id
+                  type: numeric
+              - column:
+                  header: user_id
+                  name: user_id
+                  type: numeric
+              - column:
+                  header: guild_id
+                  name: guild_id
+                  type: numeric
+              - column:
+                  header: level_id
+                  name: level_id
+                  type: numeric
+            commentLineStartsWith: '#'
+            encoding: UTF-8
+            separator: ','
+            file: db/changelog/testdata/guild_infos.csv
+            tableName: guild_info

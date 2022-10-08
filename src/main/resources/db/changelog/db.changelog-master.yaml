@@ -5,5 +5,5 @@ databaseChangeLog:
       file: db/changelog/changes2022/0002_create_catalogs.yml
   - include:
       file: db/changelog/changes2022/0003_create_tables_rating_users.yml
-#  - include:
-#      file: db/changelog/changes2022/9001_test_data.yml
+  - include:
+      file: db/changelog/changes2022/9001_test_data.yml

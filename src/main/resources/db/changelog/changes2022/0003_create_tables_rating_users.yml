@@ -50,20 +50,6 @@ databaseChangeLog:
                     foreignKeyName: fk_users_position
                     references: position(id)
                     nullable: true
-              - column:
-                  name: guild_id
-                  type: bigint
-                  constraints:
-                    foreignKeyName: fk_users_guild
-                    references: guild(id)
-                    nullable: true
-              - column:
-                  name: level_id
-                  type: bigint
-                  constraints:
-                    foreignKeyName: fk_users_level
-                    references: level(id)
-                    nullable: true
         - createTable:
             tableName: rating
             columns:
@@ -90,6 +76,35 @@ databaseChangeLog:
             referencedTableName: users
             referencedColumnNames: id
             constraintName: fk_department_users
-
-
+        - createTable:
+            tableName: guild_info
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_guild_info_users
+                    references: users(id)
+                    nullable: false
+              - column:
+                  name: guild_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_guild_info_guild
+                    references: guild(id)
+                    nullable: true
+              - column:
+                  name: level_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: fk_guild_info_level
+                    references: level(id)
+                    nullable: true
 
