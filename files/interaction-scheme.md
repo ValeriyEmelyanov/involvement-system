@@ -1,0 +1,1 @@
+![interaction-scheme](interaction-scheme.jpg)

@@ -76,8 +76,8 @@ Ctrl + C завершение работы.
 * Для документирования API, генерации интерфейсов API и DTO используется OpenAPI
   (см. [api-doc.yml](src/main/resources/static/api-doc.yml)).
 * Реализована многослойная архитектура приложения.
-  (см. [interaction-scheme](files/interaction-scheme.jpg))
-* Для хранения данных (см. [database-scheme](files/database-scheme.jpg)) 
+  (см. [interaction-scheme](files/interaction-scheme.md))
+* Для хранения данных (см. [database-scheme](files/database-scheme.md)) 
 используется база данных PostgresSQL.
 * Миграция данных осуществляется с помощью Liquibase: создаются таблицы 
 и заполняются тестовыми данными из файлов *.csv. 

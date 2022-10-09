@@ -1,0 +1,1 @@
+![database-scheme](database-scheme.jpg)
