@@ -21,6 +21,8 @@ tags:
     description: Задания / активности
   - name: wallet
     description: Кошелек
+  - name: users
+    description: Админка
 
 paths:
   /api/v1/members:
