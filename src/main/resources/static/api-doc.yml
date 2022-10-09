@@ -399,6 +399,25 @@ paths:
         '201':
           description: CREATED
 
+  /api/v1/users:
+    post:
+      summary: Создать нового пользователя
+      operationId: createUser
+      tags:
+        - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+
 
 components:
   schemas:
@@ -711,3 +730,79 @@ components:
           format: int64
           description: Идентификатор исполнителя (значение может быть не заполнено)
           example: 45
+
+    UserRequest:
+      type: object
+      description: Запрос на создание пользователя
+      properties:
+        fullName:
+          type: string
+          description: Полное имя пользователя
+          example: Иванов Иван Иванович
+        login:
+          type: string
+          description: Логин пользователя
+          example: ivaniv_ii
+        phone:
+          type: string
+          description: Телефон пользователя
+          example: +7(999)0010001
+        email:
+          type: string
+          description: Электронный адрес пользователя
+          example: ivaniv_ii@our-company.mock
+        departmentId:
+          type: integer
+          format: int64
+          description: Идентификатор отдела
+          example: 6
+        positionId:
+          type: integer
+          format: int64
+          description: Идентификатор должности
+          example: 6
+        roles:
+          type: array
+          items:
+            type: string
+          description: Роли. Доступные роли ADMIN, MANAGER, HR_MANAGER, USER
+          example: [MANAGER, USER]
+    UserResponse:
+      type: object
+      description: Пользователь
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Идентификатор задания
+          example: 45
+        fullName:
+          type: string
+          description: Полное имя пользователя
+          example: Иванов Иван Иванович
+        login:
+          type: string
+          description: Логин пользователя
+          example: ivaniv_ii
+        phone:
+          type: string
+          description: Телефон пользователя
+          example: +7(999)0010001
+        email:
+          type: string
+          description: Электронный адрес пользователя
+          example: ivaniv_ii@our-company.mock
+        department:
+          type: string
+          description: Наименование отдела
+          example: Отдел разработки
+        position:
+          type: string
+          description: Наименование должности
+          example: Ведущий разработчик
+        roles:
+          type: array
+          items:
+            type: string
+          description: Роли.
+          example: [MANAGER, USER]
