@@ -32,11 +32,11 @@ Ctrl + C завершение работы.
 
 Для запуска в контейнерах на компьютере должны быть установлены docker и docker-compose.
 
-Создать необходимы образы, создать и запустить контейнеры
+Создать необходимые образы, создать и запустить контейнеры
 
 ```docker-compose up```
 
-Результат будут созданы docker-образы involvement-system и postgres:12-alpine,
+В результате будут созданы docker-образы involvement-system и postgres:12-alpine,
 созданы и запущены контейнеры involvement-system-app и involvement-system-postgres.
 
 Ctrl + C завершение работы.
@@ -45,9 +45,11 @@ Ctrl + C завершение работы.
 
 ```docker start involvement-system-postgres```
 
-```docker start involvement-system-app```
+с выводом логов
 
-Остановка контейнеров 
+```docker start -а involvement-system-app```
+
+Остановка контейнеров (из другого командного окна) 
 
 ```docker stop involvement-system-app```
 
