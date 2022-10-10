@@ -1,6 +1,6 @@
 # Involvement System
 
-### Запуск приложения
+### Запуск сервиса локально
 Для запуска сервиса необходимо:
 * Установленная Java SDK не ниже 11 версии.
 * Порт 5432 должен слушать PostgreSQL не ниже 9 версии
@@ -11,20 +11,47 @@
 
 Порядок действий:
 
-Сгенерировать код по спецификации
+Очистить старые версии и сгенерировать код по спецификации
 
 ```mvn clean compile```
 
-Запустить сервис
+Собрать и запустить сервис
 
-```mvn spring-boot:run```
+```mvn spring-boot:run -D"spring-boot.run.profiles"=local```
+
+Сервис будет доступен на порту 8091
 
 После запуска сервиса документацию API доступна 
-по ссылке http://localhost:8080/swagger-ui.html
+по ссылке http://localhost:8091/swagger-ui.html
 
 Так же документация API доступна в yaml-формате [api-doc.yml](src/main/resources/static/api-doc.yml)
 
 Ctrl + C завершение работы.
+
+### Запуск сервиса в docker-контейнерах (docker-compose)
+
+Для запуска в контейнерах на компьютере должны быть установлены docker и docker-compose.
+
+Создать необходимы образы, создать и запустить контейнеры
+
+```docker-compose up```
+
+Результат будут созданы docker-образы involvement-system и postgres:12-alpine,
+созданы и запущены контейнеры involvement-system-app и involvement-system-postgres.
+
+Ctrl + C завершение работы.
+
+Повторный запуск контейнеров 
+
+```docker start involvement-system-postgres```
+
+```docker start involvement-system-app```
+
+Остановка контейнеров 
+
+```docker stop involvement-system-app```
+
+```docker stop involvement-system-postgres```
 
 ### Используемые технологии
 * Java 11

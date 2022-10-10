@@ -21,7 +21,7 @@ tags:
     description: Задания / активности
   - name: wallet
     description: Кошелек
-  - name: users
+  - name: user
     description: Админка
 
 paths:

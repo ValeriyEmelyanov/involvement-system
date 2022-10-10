@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    image: postgres:12-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=involvement_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+    container_name: involvement-system-postgres
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    image: involvement-system
+    command: java -jar ./app.jar
+    environment:
+      - PORT=8091
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/involvement_db
+    ports:
+      - "8091:8091"
+    depends_on:
+      - postgres
+    container_name: involvement-system-app
+
+volumes:
+  db-data:

@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>com.example</groupId>
-	<artifactId>vtb-motivator-ptototype</artifactId>
+	<artifactId>involvement-system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>vtb-motivator-prototype</name>
-	<description>Vtb-motivator-prototype project for Spring Boot &amp; OpenApi</description>
+	<name>involvement-system</name>
+	<description>Involvement-system project for Spring Boot &amp; OpenApi</description>
 
 	<properties>
 		<java.version>11</java.version>
