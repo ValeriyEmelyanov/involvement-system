@@ -45,8 +45,6 @@ Ctrl + C завершение работы.
 
 ```docker start involvement-system-postgres```
 
-с выводом логов
-
 ```docker start -а involvement-system-app```
 
 Остановка контейнеров (из другого командного окна) 
