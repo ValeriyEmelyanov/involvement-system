@@ -53,6 +53,15 @@ Ctrl + C завершение работы.
 
 ```docker stop involvement-system-postgres```
 
+Если в выводе логов на экран нет потребности, 
+то для старта достаточно выполнить 
+
+```docker-compose start```
+
+и для остановки
+
+```docker-compose stop```
+
 ### Используемые технологии
 * Java 11
 * Spring Boot
