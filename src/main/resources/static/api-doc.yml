@@ -3,8 +3,10 @@ info:
   title: Involvement System
   version: 1.0.0
 servers:
-  - url: http://localhost:8080
+  - url: http://localhost:8091
 tags:
+  - name: auth
+    description: Аутентификация
   - name: member
     description: Члены гильдий/сообществ
   - name: guild
@@ -25,6 +27,25 @@ tags:
     description: Админка
 
 paths:
+  /api/v1/auth:
+    post:
+      summary: Аутентификация пользователя
+      operationId: auth
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
   /api/v1/members:
     get:
       summary: Получить список членов гильдий постранично
@@ -422,6 +443,27 @@ paths:
 
 components:
   schemas:
+    AuthRequest:
+      type: object
+      description: Запрос аутентификации пользователя (логин и пароль)
+      properties:
+        login:
+          type: string
+          description: Логин
+          example: ivanov_ii
+        password:
+          type: string
+          description: Пароль
+          example: 17Sq2*
+    AuthResponse:
+      type: object
+      description: Ответ на запрос аутентификации, содержащий токен доступа
+      properties:
+        token:
+          type: string
+          description: Токен доступа
+          example: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY2NjM4NjAwMCwiYXV0aG9yaXRpZXMiOiJhZG1pbjpyZWFkLGFkbWluOndyaXRlIn0.tFEIryVKUckbHp3KC0sDI9CJUFJunpj0U_swv1NdSx7dyDxoXj7FFrRk0K8hUDAGCfd50bQ4wr3rDZs0AvagdA
+
     MemberRatingResponse:
       type: object
       description: Рейтинг члена гильдии / участника сообщества

@@ -48,6 +48,8 @@ public class User {
 
     private String email;
 
+    private boolean enable;
+
     @Column(name = "private_key")
     private String privateKey;
 
