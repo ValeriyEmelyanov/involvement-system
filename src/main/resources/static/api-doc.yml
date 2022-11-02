@@ -385,6 +385,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TaskResponse'
+  /api/v1/tasks/{id}/status:
     patch:
       summary: Изменить статус и/или исполнителя задание
       operationId: changeTaskStatus
@@ -422,6 +423,35 @@ paths:
           description: CREATED
 
   /api/v1/users:
+    get:
+      summary: Получить список пользователей
+      operationId: getUsers
+      tags:
+        - user
+      parameters:
+        - in: query
+          name: page
+          description: Номер страницы (нумерация начинается с 1)
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          example: 1
+        - in: query
+          name: size
+          description: Размер страницы (сколько пользователей выведется на страницу)
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 20
+          example: 20
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPageResponse'
     post:
       summary: Создать нового пользователя
       operationId: createUser
@@ -435,6 +465,98 @@ paths:
       responses:
         '201':
           description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+  /api/v1/users/{id}:
+    get:
+      summary: Получить пользователя по идентификатору
+      operationId: getUserById
+      tags:
+        - user
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+    put:
+      summary: Изменить пользователя
+      operationId: updateUser
+      tags:
+        - user
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+    delete:
+      summary: Удалить пользователя
+      operationId: deleteUser
+      tags:
+        - user
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      responses:
+        '200':
+          description: OK
+  /api/v1/users/{id}/enable:
+    patch:
+      summary: Активизировать или отключить пользователя
+      operationId: enableUser
+      tags:
+        - user
+      parameters:
+        - in: path
+          name: id
+          description: Идентификатор пользователя
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 333
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEnableRequest'
+      responses:
+        '200':
+          description: OK
           content:
             application/json:
               schema:
@@ -810,6 +932,14 @@ components:
             type: string
           description: Роли. Доступные роли ADMIN, MANAGER, HR_MANAGER, USER
           example: [MANAGER, USER]
+    UserEnableRequest:
+      type: object
+      description: Запрос на активизацию или отключение пользователя
+      properties:
+        enable:
+          type: boolean
+          description: true - активизировать пользователя, false - отключить пользователя
+          example: false
     UserResponse:
       type: object
       description: Пользователь
@@ -849,3 +979,29 @@ components:
             type: string
           description: Роли.
           example: [MANAGER, USER]
+    UserPageResponse:
+      type: object
+      description: Страница списка пользователей
+      properties:
+        content:
+          description: Список пользователей
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+        page:
+          description: Номер страницы
+          type: integer
+          example: 1
+        size:
+          description: Размер страницы (количество пользователей на странице)
+          type: integer
+          example: 20
+        totalItems:
+          description: Всего пользователей
+          type: integer
+          format: int64
+          example: 2
+        totalPages:
+          description: Всего страниц
+          type: integer
+          example: 1
